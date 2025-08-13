@@ -1,33 +1,61 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Outlet } from 'react-router-dom';
+import Header from './components/layout/Header';
+import Sidebar from './components/layout/Sidebar';
+import AIButton from './components/ui/AIButton';
+import AIModal from './components/features/AIModal';
+import MenuDetailModal from './components/features/MenuDetailModal';
 import './App.css'
 
+/**
+ * Main App component that serves as the layout wrapper for the coffee shop application
+ * Manages global state for modals and provides context to child routes
+ */
 function App() {
-  const [count, setCount] = useState(0)
+  // State management for UI components
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isAIModalOpen, setAIModalOpen] = useState(false);
+  const [selectedMenuItem, setSelectedMenuItem] = useState(null);
+
+  /**
+   * Handles menu card clicks to open detail modal
+   * @param {Object} item - The menu item that was clicked
+   */
+  const handleCardClick = (item) => {
+    setSelectedMenuItem(item);
+  };
+  
+  /**
+   * Closes the menu detail modal
+   */
+  const closeDetailModal = () => {
+    setSelectedMenuItem(null);
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      {/* Main app container with mobile-first responsive design */}
+      <div className="max-w-sm mx-auto bg-[#ffffff] min-h-screen font-sans relative">
+        {/* Header with navigation menu button and search */}
+        <Header onMenuClick={() => setSidebarOpen(true)} onCardClick={handleCardClick} />
+        
+        {/* Sidebar navigation menu */}
+        <Sidebar isOpen={isSidebarOpen} onClose={() => setSidebarOpen(false)} />
+
+        {/* Main content area - renders HomePage or CategoryPage based on route */}
+        <main>
+          <Outlet context={{ onCardClick: handleCardClick }} />
+        </main>
+
+        {/* Floating AI assistant button */}
+        <AIButton onClick={() => setAIModalOpen(true)} />
+
+        {/* AI chat modal */}
+        <AIModal isOpen={isAIModalOpen} onClose={() => setAIModalOpen(false)} />
+        
+        {/* Menu item detail modal */}
+        <MenuDetailModal item={selectedMenuItem} onClose={closeDetailModal} />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
