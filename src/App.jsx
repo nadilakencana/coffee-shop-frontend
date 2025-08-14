@@ -35,7 +35,7 @@ function App() {
   return (
     <>
       {/* Main app container with mobile-first responsive design */}
-      <div className="max-w-sm mx-auto bg-[#ffffff] min-h-screen font-sans relative">
+      <div className="w-full  mx-auto bg-[#ffffff] sm:w-8/12 md:w-4/12 px-0  font-sans relative">
         {/* Header with navigation menu button and search */}
         <Header onMenuClick={() => setSidebarOpen(true)} onCardClick={handleCardClick} />
         

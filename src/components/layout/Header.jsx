@@ -70,20 +70,20 @@ const Header = ({ onMenuClick, onCardClick }) => {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-[#FDF7F3]/32 backdrop-blur-lg p-4 flex items-center justify-between">
+    <header className="sticky top-0 z-40 bg-[#FDF7F3]/32 backdrop-blur-lg p-2 sm:p-4 flex items-center justify-between">
       <div className="text-center flex-shrink-0">
-        <img src={logo} alt="logo kopi kita" className="h-12 w-auto" />
+        <img src={logo} alt="Kopi Kita" className="h-14 w-auto" />
       </div>
-      <div className="flex items-center space-x-3">
+      <div className="w-full flex justify-between items-center gap-x-2 sm:gap-x-8">
         {/* Search Bar with Results */}
-        <div className="relative" ref={searchRef}>
+        <div className="relative flex-1 max-w-xs sm:max-w-none" ref={searchRef}>
           <input 
             type="text" 
-            placeholder="Search menu..."
+            placeholder="Search..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => searchQuery && setShowResults(true)}
-            className="w-60 pl-3 pr-2 py-1 rounded-full bg-white shadow-inner text-stone-600 focus:outline-none focus:ring-2 focus:ring-[#A85B4D]"
+            className="w-full sm:w-70 pl-3 pr-2 py-2 text-sm sm:text-base rounded-full bg-white shadow-inner text-stone-600 focus:outline-none focus:ring-2 focus:ring-[#A85B4D]"
           />
           
           {/* Search Results Dropdown */}
@@ -96,13 +96,13 @@ const Header = ({ onMenuClick, onCardClick }) => {
                   <div 
                     key={item.id}
                     onClick={() => handleSearchResultClick(item)}
-                    className="p-3 hover:bg-gray-50 cursor-pointer border-b last:border-b-0 flex justify-between items-center"
+                    className="p-2 sm:p-3 hover:bg-gray-50 cursor-pointer border-b last:border-b-0 flex justify-between items-center"
                   >
                     <div>
-                      <div className="font-medium text-gray-800">{item.name}</div>
-                      <div className="text-sm text-gray-500 capitalize">{item.category}</div>
+                      <div className="font-medium text-gray-800 text-sm sm:text-base">{item.name}</div>
+                      <div className="text-xs sm:text-sm text-gray-500 capitalize">{item.category}</div>
                     </div>
-                    <div className="text-[#A85B4D] font-semibold">
+                    <div className="text-[#A85B4D] font-semibold text-sm sm:text-base">
                       Rp {item.price?.toLocaleString('id-ID') || 'N/A'}
                     </div>
                   </div>
@@ -118,7 +118,7 @@ const Header = ({ onMenuClick, onCardClick }) => {
           src={btnSidebar} 
           alt="btn menu" 
           onClick={onMenuClick} 
-          className="w-8 h-8 cursor-pointer hover:opacity-80" 
+          className="w-6 h-6 sm:w-8 sm:h-8 cursor-pointer hover:opacity-80 flex-shrink-0" 
         />
       </div>
     </header>
